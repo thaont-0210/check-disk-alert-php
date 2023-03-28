@@ -13,7 +13,7 @@ $disk->getOverResult();
 if (count($disk->diskOverResult) > 0) {
     $slack = new Slack();
     $slack->setToken(getenv('SLACK_TOKEN'));
-    $slack->setChannel(getenv('SLACK_CHANEL_ID'));
+    $slack->setChannel(getenv('SLACK_CHANNEL_ID'));
     $slack->setTitle('Alert: disk space in ' . getenv('APP_ENV') . ' is over!!!');
     $slack->setMessage(prepareMessage($disk->diskOverResult));
     $slack->sendMessage();

@@ -12,7 +12,7 @@ $disk->runDiskHumanReadableCmd();
 if ($disk->dfCmdResult['code'] == 0) {
     $slack = new Slack();
     $slack->setToken(getenv('SLACK_TOKEN'));
-    $slack->setChannel(getenv('SLACK_CHANEL_ID'));
+    $slack->setChannel(getenv('SLACK_CHANNEL_ID'));
     $slack->setTitle('Report: disk space usage in ' . getenv('APP_ENV'));
     $slack->setMessage(prepareMessage($disk->dfCmdResult['result']));
     $slack->sendMessage();
