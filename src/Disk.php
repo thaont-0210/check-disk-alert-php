@@ -7,12 +7,16 @@ class Disk {
     public $dfCmdOverResult = array();
     public $diskOverResult = array();
 
-    public function run()
+    public function getOverResult()
     {
-        // $this->runDiskHumanReadableCmd();
-        // $this->getDiskHumanReadable();
         $this->runDiskHumanReadableOverCmd();
         $this->getDiskHumanReadableOver();
+    }
+
+    public function getReportResult()
+    {
+        $this->runDiskHumanReadableCmd();
+        $this->getDiskHumanReadable();
     }
 
     public function setDiskOverPercent($percent)
@@ -62,8 +66,10 @@ class Disk {
     {
         $result = array();
         if ($this->dfCmdOverResult['code'] == 0 && count($this->dfCmdOverResult['result']) > 0) {
+            $j = 0;
             for ($i = count($this->dfCmdOverResult['result']) - 1; $i >= 0; $i--) {
-                $result[$i] = processStringToArrayHelper($this->dfCmdOverResult['result'][$i]);
+                $result[$j] = processStringToArrayHelper($this->dfCmdOverResult['result'][$i]);
+                $j++;
             }
         }
 

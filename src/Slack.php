@@ -5,6 +5,7 @@ class Slack
     public $postMessageUrl = 'https://slack.com/api/chat.postMessage';
     public $token = '';
     public $message = '';
+    public $title = '';
     public $channel = '';
 
     public function setToken($token)
@@ -22,13 +23,20 @@ class Slack
         $this->message = $message;
     }
 
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
     public function sendMessage()
     {
         $ch = curl_init($this->postMessageUrl);
         $data = http_build_query([
             'token' => $this->token,
             'channel' => $this->channel,
-            'text' => $this->message,
+            'link_names' => true,
+            'text' => $this->title,
+            'blocks' => json_encode($this->message),
         ]);
 
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
@@ -37,7 +45,7 @@ class Slack
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $result = curl_exec($ch);
         curl_close($ch);
-        
+
         return $result;
     }
 }
