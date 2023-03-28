@@ -74,6 +74,30 @@ class Disk {
 }
 
 
+class Slack
+{
+	public $postMessageUrl = "https://slack.com/api/chat.postMessage";
+
+	function sendMessage($message, $channel)
+    {
+        $ch = curl_init($this->postMessageUrl);
+	    $data = http_build_query([
+	        "token" => "xxx",
+	    	"channel" => $channel,
+	    	"text" => $message,
+	    ]);
+
+	    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+	    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	    $result = curl_exec($ch);
+	    curl_close($ch);
+	    
+	    return $result;
+    }
+}
+
 function processStringToArrayHelper($string, $regex = '!\s+!')
 {
 	$string = preg_replace($regex, ' ', $string);
